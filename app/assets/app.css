@@ -1,3 +1,10 @@
+.layout-container {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

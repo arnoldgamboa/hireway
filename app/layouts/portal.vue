@@ -91,6 +91,9 @@ const panelOpen = ref(false)
   display: flex;
   min-height: calc(100vh - 3rem);
   align-items: stretch;
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-inline: auto;
 }
 
 .sidenav {

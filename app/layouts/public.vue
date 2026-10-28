@@ -1,16 +1,20 @@
 <template>
   <div class="public-layout">
     <header class="public-header">
-      <NuxtLink to="/" class="logo">Hireway</NuxtLink>
-      <nav class="nav">
-        <NuxtLink to="/">Jobs</NuxtLink>
-        <NuxtLink to="/about">About</NuxtLink>
-        <NuxtLink to="/employers">For employers</NuxtLink>
-        <NuxtLink to="/contact">Contact</NuxtLink>
-      </nav>
+      <div class="layout-container public-header__inner">
+        <NuxtLink to="/" class="logo">Hireway</NuxtLink>
+        <nav class="nav">
+          <NuxtLink to="/">Jobs</NuxtLink>
+          <NuxtLink to="/about">About</NuxtLink>
+          <NuxtLink to="/employers">For employers</NuxtLink>
+          <NuxtLink to="/contact">Contact</NuxtLink>
+        </nav>
+      </div>
     </header>
     <main class="public-main">
-      <slot />
+      <div class="layout-container">
+        <slot />
+      </div>
     </main>
   </div>
 </template>
@@ -23,13 +27,16 @@
 }
 
 .public-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.public-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 2rem;
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
+  padding-block: 1rem;
 }
 
 .logo {
@@ -58,7 +65,10 @@
 
 .public-main {
   flex: 1;
-  padding: 2rem;
   min-width: 0;
+}
+
+.public-main .layout-container {
+  padding-block: 2rem;
 }
 </style>

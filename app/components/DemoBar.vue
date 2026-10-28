@@ -82,12 +82,14 @@ function resetDemo () {
 }
 
 .demo-bar__inner {
-  max-width: 100%;
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-inline: auto;
   min-height: 3rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
   flex-wrap: wrap;
 }
 
