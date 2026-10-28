@@ -1,5 +1,5 @@
 {
-  "name": "workspace",
+  "name": "hireway",
   "type": "module",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "nuxt build && wrangler deploy"
+    "deploy": "npm run build && npx wrangler deploy",
+    "preview:worker": "npm run build && npx wrangler dev"
   },
   "dependencies": {
     "@pinia/nuxt": "^1.0.3",
