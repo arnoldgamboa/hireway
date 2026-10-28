@@ -1,2 +1,2 @@
-_nuxt/**
-server/**
+_worker.js
+_routes.json
