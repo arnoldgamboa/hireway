@@ -10,6 +10,7 @@ export default defineNuxtConfig({
       deployConfig: true,
       wrangler: {
         name: 'hireway',
+        previews: {},
       },
     },
   },
