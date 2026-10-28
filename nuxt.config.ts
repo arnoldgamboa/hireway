@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@pinia/nuxt'],
   css: ['~/assets/tokens.css', '~/assets/app.css'],
+  nitro: {
+    preset: 'cloudflare_module',
+    cloudflare: {
+      deployConfig: true,
+    },
+  },
   app: {
     head: {
       link: [
