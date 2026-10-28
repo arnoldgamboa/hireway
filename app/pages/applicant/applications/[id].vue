@@ -67,7 +67,7 @@ function declineInvite () {
   <div v-else>
     <PageHeader :title="job.title" :subtitle="applicantFacingStatus(app, job.orgId, job.confidential, store)" />
     <div class="card stack-md">
-      <StatusBadge :status="app.status" />
+      <StatusBadge :status="applicantStatusLabel(app.status)" />
       <button v-if="app.status !== 'Hired' && app.status !== 'Withdrawn'" type="button" class="btn btn--danger" @click="withdraw">Withdraw</button>
       <p v-if="gentleOutcome" class="meta">{{ gentleOutcome }}</p>
     </div>

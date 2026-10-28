@@ -62,6 +62,11 @@ export function initials (name: string) {
   return name.split(/\s+/).map(p => p[0]).join('').slice(0, 2).toUpperCase()
 }
 
+export function applicantStatusLabel (status: string) {
+  if (status === 'Recommended') return 'Under review'
+  return status
+}
+
 export function formatSalary (job: { salaryDisclosed: boolean; salaryMin?: number; salaryMax?: number }) {
   if (!job.salaryDisclosed || (!job.salaryMin && !job.salaryMax)) return 'Salary not disclosed'
   const fmt = (n: number) => `₱${n.toLocaleString('en-PH')}`

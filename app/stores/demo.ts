@@ -1,4 +1,4 @@
-import type { ApplicationStatus, DemoRole, Job } from '~/data/types'
+import type { ApplicationStatus, DemoRole, Interview, Job } from '~/data/types'
 import { createSeed, DEMO_TODAY, STORAGE_KEY } from '~/data/seed'
 import type { DemoState } from '~/data/types'
 
@@ -388,26 +388,72 @@ export const useDemoStore = defineStore('demo', {
       this.persist()
     },
 
-    shareRecommendation (applicationId: string, shareableNotes: string, overrides: Record<string, string>) {
+    shareRecommendation (applicationId: string, payload: {
+      whySummary: string
+      shareableNotes: string
+      internalNotes?: string
+    }) {
       const app = this.data.applications.find(a => a.id === applicationId)
       if (!app || this.data.recommendations.some(r => r.applicationId === applicationId)) return false
       const alias = generateAlias()
       this.data.recommendations.push({
-        id: `rec-${applicationId}`,
+        id: `rec-${applicationId.replace('app-', '')}`,
         applicationId,
         alias,
         status: 'shared',
-        whySummary: 'HR recommendation',
+        whySummary: payload.whySummary,
         includeNotes: true,
         includeRecording: true,
         includeCv: true,
-        shareableNotes,
-        internalNotes: overrides.internal || undefined,
+        shareableNotes: payload.shareableNotes,
+        internalNotes: payload.internalNotes,
       })
       app.status = 'Recommended'
       app.updatedAt = DEMO_TODAY
       this.persist()
       return true
+    },
+
+    saveInterview (applicationId: string, patch: Partial<Interview>) {
+      let interview = this.data.interviews.find(i => i.applicationId === applicationId)
+      if (!interview) {
+        interview = {
+          id: `int-${Date.now()}`,
+          applicationId,
+          scheduledAt: `${DEMO_TODAY}T10:00:00+08:00`,
+          platform: 'Google Meet',
+          link: 'https://meet.example/hw-demo',
+          interviewer: 'Hana Cruz',
+          status: 'Scheduled',
+        }
+        this.data.interviews.push(interview)
+      }
+      Object.assign(interview, patch)
+      if (patch.status === 'Completed') {
+        const app = this.data.applications.find(a => a.id === applicationId)
+        if (app && ['Submitted', 'Screening', 'Shortlisted', 'HR interview scheduled', 'HR interviewed'].includes(app.status)) {
+          app.status = 'HR interviewed'
+          app.updatedAt = DEMO_TODAY
+        }
+      }
+      this.persist()
+    },
+
+    markHired (applicationId: string, startDate: string) {
+      const app = this.data.applications.find(a => a.id === applicationId)
+      if (!app) return
+      app.status = 'Hired'
+      app.startDate = startDate
+      app.updatedAt = DEMO_TODAY
+      this.persist()
+    },
+
+    notHiredAfterAccept (applicationId: string, note: string) {
+      const app = this.data.applications.find(a => a.id === applicationId)
+      if (!app) return
+      app.hrRejectReason = note
+      app.updatedAt = DEMO_TODAY
+      this.persist()
     },
 
     setApplicationStatus (applicationId: string, status: ApplicationStatus) {

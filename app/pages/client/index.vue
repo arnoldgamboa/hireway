@@ -8,6 +8,15 @@ const jobs = computed(() =>
   store.data.jobs.filter(j => j.orgId === orgId.value && ['Published', 'Paused', 'Closed'].includes(j.status.replace(', filled', ''))),
 )
 
+const STAT_TILES = [
+  { key: 'applied', label: 'Applied' },
+  { key: 'hrInterviewed', label: 'HR interviewed' },
+  { key: 'recommended', label: 'Recommended' },
+  { key: 'invited', label: 'Invited' },
+  { key: 'accepted', label: 'Accepted' },
+  { key: 'hired', label: 'Hired' },
+] as const
+
 function stats (jobId: string) {
   return jobApplicationStats(jobId, store.data.applications)
 }
@@ -31,9 +40,9 @@ const lowBalance = computed(() => org.value.balance < org.value.threshold)
           <StatusBadge :status="job.status" />
         </div>
         <div class="tiles">
-          <div v-for="(val, key) in stats(job.id)" :key="key" class="tile">
-            <span class="meta">{{ key }}</span>
-            <strong>{{ val }}</strong>
+          <div v-for="tile in STAT_TILES" :key="tile.key" class="tile">
+            <span class="meta">{{ tile.label }}</span>
+            <strong>{{ stats(job.id)[tile.key] }}</strong>
           </div>
         </div>
       </NuxtLink>
@@ -49,7 +58,6 @@ const lowBalance = computed(() => org.value.balance < org.value.threshold)
   gap: 0.5rem;
   margin-top: 0.75rem;
   font-size: 0.8125rem;
-  text-transform: capitalize;
 }
 .tile strong { display: block; font-variant-numeric: tabular-nums; }
 </style>

@@ -8,15 +8,14 @@ function mkApplicant (
   years: number,
   salary: string,
   skills: string[],
+  mobileSuffix: string,
   extra: Partial<Applicant> = {},
 ): Applicant {
-  const num = id.split('-').pop() || '00'
-  const suffix = String(parseInt(num.replace(/\D/g, '') || '1', 10) % 100).padStart(2, '0')
   return {
     id,
     name,
     email: `${id}@example.com`,
-    mobile: `+63 917 555 01${suffix}`,
+    mobile: `+63 917 555 01${mobileSuffix}`,
     city,
     headline,
     summary: extra.summary || `${headline} based in ${city}.`,
@@ -49,31 +48,31 @@ function mkApplicant (
 
 export function createSeed (): DemoState {
   const applicants: Applicant[] = [
-    mkApplicant('ana-reyes', 'Ana Reyes', 'Quezon City', 'Support specialist', 4, '₱28,000', ['Customer support', 'Chat', 'English']),
-    mkApplicant('ben-cruz', 'Ben Cruz', 'Pasig', 'Voice support agent', 3, '₱26,000', ['Customer support', 'Voice', 'CRM']),
-    mkApplicant('cara-santos', 'Cara Santos', 'Manila', 'Technical support agent', 5, '₱30,000', ['Technical support', 'Troubleshooting', 'English']),
-    mkApplicant('diego-lim', 'Diego Lim', 'Cebu City', 'Billing support agent', 4, '₱40,000', ['Customer support', 'Billing', 'Escalations']),
-    mkApplicant('elena-vargas', 'Elena Vargas', 'Mandaluyong', 'Support team lead', 6, '₱32,000', ['Customer support', 'Zendesk', 'Escalations'], {
+    mkApplicant('ana-reyes', 'Ana Reyes', 'Quezon City', 'Support specialist', 4, '₱28,000', ['Customer support', 'Chat', 'English'], '01'),
+    mkApplicant('ben-cruz', 'Ben Cruz', 'Pasig', 'Voice support agent', 3, '₱26,000', ['Customer support', 'Voice', 'CRM'], '02'),
+    mkApplicant('cara-santos', 'Cara Santos', 'Manila', 'Technical support agent', 5, '₱30,000', ['Technical support', 'Troubleshooting', 'English'], '03'),
+    mkApplicant('diego-lim', 'Diego Lim', 'Cebu City', 'Billing support agent', 4, '₱40,000', ['Customer support', 'Billing', 'Escalations'], '04'),
+    mkApplicant('elena-vargas', 'Elena Vargas', 'Mandaluyong', 'Support team lead', 6, '₱32,000', ['Customer support', 'Zendesk', 'Escalations'], '05', {
       summary: 'Support lead with six years on voice and chat, comfortable coaching new hires.',
     }),
-    mkApplicant('felix-navarro', 'Felix Navarro', 'Makati', 'Support coach', 5, '₱34,000', ['Customer support', 'QA', 'Coaching']),
-    mkApplicant('omar-santos', 'Omar Santos', 'Taguig', 'Night-shift support agent', 4, '₱30,000', ['Customer support', 'Night shift', 'Voice']),
-    mkApplicant('grace-uy', 'Grace Uy', 'Pasay', 'Senior support specialist', 7, '₱36,000', ['Customer support', 'Coaching', 'QA'], {
+    mkApplicant('felix-navarro', 'Felix Navarro', 'Makati', 'Support coach', 5, '₱34,000', ['Customer support', 'QA', 'Coaching'], '06'),
+    mkApplicant('omar-santos', 'Omar Santos', 'Taguig', 'Night-shift support agent', 4, '₱30,000', ['Customer support', 'Night shift', 'Voice'], '07'),
+    mkApplicant('grace-uy', 'Grace Uy', 'Pasay', 'Senior support specialist', 7, '₱36,000', ['Customer support', 'Coaching', 'QA'], '08', {
       summary: 'Senior agent who has run shift handovers and QA calibration.',
       recordingConsent: true,
     }),
-    mkApplicant('lea-ong', 'Lea Ong', 'Quezon City', 'Support specialist', 5, '₱45,000', ['Customer support', 'Voice', 'Escalations']),
-    mkApplicant('iris-mendoza', 'Iris Mendoza', 'Manila', 'Support team lead', 8, '₱38,000', ['Customer support', 'Leadership', 'Voice']),
-    mkApplicant('paolo-diaz', 'Paolo Diaz', 'Makati', 'Junior accountant', 3, '₱32,000', ['Accounting', 'Excel', 'Reconciliation']),
-    mkApplicant('hugo-tan', 'Hugo Tan', 'Antipolo', 'Support agent', 2, '₱24,000', ['Customer support', 'Chat', 'English']),
-    mkApplicant('jake-ramos', 'Jake Ramos', 'Cavite', 'Career shifter', 1, '₱22,000', ['Retail', 'English', 'Typing']),
-    mkApplicant('kim-bautista', 'Kim Bautista', 'Manila', 'Support agent', 3, '₱27,000', ['Customer support', 'Chat', 'CRM']),
-    mkApplicant('maya-flores', 'Maya Flores', 'Cebu City', 'Staff nurse', 6, '₱30,000', ['Nursing', 'Patient care', 'BLS'], {
+    mkApplicant('lea-ong', 'Lea Ong', 'Quezon City', 'Support specialist', 5, '₱45,000', ['Customer support', 'Voice', 'Escalations'], '09'),
+    mkApplicant('iris-mendoza', 'Iris Mendoza', 'Manila', 'Support team lead', 8, '₱38,000', ['Customer support', 'Leadership', 'Voice'], '10'),
+    mkApplicant('paolo-diaz', 'Paolo Diaz', 'Makati', 'Junior accountant', 3, '₱32,000', ['Accounting', 'Excel', 'Reconciliation'], '11'),
+    mkApplicant('hugo-tan', 'Hugo Tan', 'Antipolo', 'Support agent', 2, '₱24,000', ['Customer support', 'Chat', 'English'], '12'),
+    mkApplicant('jake-ramos', 'Jake Ramos', 'Cavite', 'Career shifter', 1, '₱22,000', ['Retail', 'English', 'Typing'], '13'),
+    mkApplicant('kim-bautista', 'Kim Bautista', 'Manila', 'Support agent', 3, '₱27,000', ['Customer support', 'Chat', 'CRM'], '14'),
+    mkApplicant('maya-flores', 'Maya Flores', 'Cebu City', 'Staff nurse', 6, '₱30,000', ['Nursing', 'Patient care', 'BLS'], '15', {
       summary: 'Staff nurse in outpatient clinics, day shift.',
       recordingConsent: false,
     }),
-    mkApplicant('nico-garcia', 'Nico Garcia', 'Mandaue', 'Clinic nurse', 4, '₱28,000', ['Nursing', 'Triage', 'BLS']),
-    mkApplicant('ria-castro', 'Ria Castro', 'Makati', 'Junior analyst', 2, '₱42,000', ['Excel', 'SQL', 'Reporting']),
+    mkApplicant('nico-garcia', 'Nico Garcia', 'Mandaue', 'Clinic nurse', 4, '₱28,000', ['Nursing', 'Triage', 'BLS'], '16'),
+    mkApplicant('ria-castro', 'Ria Castro', 'Makati', 'Junior analyst', 2, '₱42,000', ['Excel', 'SQL', 'Reporting'], '17'),
   ]
 
   return {
@@ -202,7 +201,7 @@ export function createSeed (): DemoState {
         id: 'int-diego', applicationId: 'app-diego-csr', scheduledAt: '2026-10-21T14:00:00+08:00', platform: 'Google Meet',
         link: 'https://meet.example/hw-diego', interviewer: 'Hana Cruz', status: 'Completed',
         recordingLink: 'https://meet.example/hw-diego', scorecard: { communication: 3, reliability: 4, roleFit: 3 },
-        shareableNotes: 'Solid billing support background.', internalNotes: 'Salary above band.',
+        shareableNotes: 'Strong billing background. Reach at 09171234567 for scheduling.', internalNotes: 'Salary above band.',
         recordingConsent: true,
       },
     ],

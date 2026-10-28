@@ -7,6 +7,34 @@ const location = ref('')
 const setup = ref('')
 const empType = ref('')
 const category = ref('')
+const salaryBand = ref('')
+
+function jobMaxSalary (job: { salaryMin?: number; salaryMax?: number }) {
+  return job.salaryMax ?? job.salaryMin ?? 0
+}
+
+function jobMinSalary (job: { salaryMin?: number; salaryMax?: number }) {
+  return job.salaryMin ?? job.salaryMax ?? 0
+}
+
+function matchesSalaryBand (job: { salaryDisclosed: boolean; salaryMin?: number; salaryMax?: number }) {
+  if (!salaryBand.value) return true
+  if (!job.salaryDisclosed) return salaryBand.value === 'undisclosed'
+  const min = jobMinSalary(job)
+  const max = jobMaxSalary(job)
+  switch (salaryBand.value) {
+    case 'under30':
+      return max > 0 && max <= 32000
+    case '30-40':
+      return min >= 25000 && max <= 40000
+    case '40-55':
+      return min >= 35000 && max <= 55000
+    case '55plus':
+      return min >= 50000
+    default:
+      return true
+  }
+}
 
 const jobs = computed(() => {
   return store.publishedJobs.filter((j) => {
@@ -15,6 +43,7 @@ const jobs = computed(() => {
     if (setup.value && j.workSetup !== setup.value) return false
     if (empType.value && j.employmentType !== empType.value) return false
     if (category.value && j.category !== category.value) return false
+    if (!matchesSalaryBand(j)) return false
     return true
   })
 })
@@ -30,6 +59,7 @@ function clearFilters () {
   setup.value = ''
   empType.value = ''
   category.value = ''
+  salaryBand.value = ''
 }
 
 function clientLabel (job: { orgId: string; confidential: boolean }) {
@@ -59,6 +89,13 @@ function clientLabel (job: { orgId: string; confidential: boolean }) {
         <select v-model="category" class="select">
           <option value="">Category</option>
           <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
+        </select>
+        <select v-model="salaryBand" class="select">
+          <option value="">Salary band</option>
+          <option value="under30">Up to ₱32,000</option>
+          <option value="30-40">₱25,000 – ₱40,000</option>
+          <option value="40-55">₱35,000 – ₱55,000</option>
+          <option value="55plus">₱50,000 and above</option>
         </select>
       </div>
     </div>
