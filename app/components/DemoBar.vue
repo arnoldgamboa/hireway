@@ -37,6 +37,7 @@ function resetDemo () {
   <div class="root">
     <header class="demo-bar">
       <div class="demo-bar__inner">
+        <span class="demo-label"><span /> DEMO WORKSPACE</span>
         <div class="segments" role="tablist" aria-label="Demo role">
           <button type="button" :class="{ active: store.ui.role === 'public' }" @click="goRole('public')">Public</button>
           <button type="button" :class="{ active: store.ui.role === 'applicant' }" @click="goRole('applicant')">Applicant</button>
@@ -129,4 +130,5 @@ function resetDemo () {
 .reset {
   margin-left: auto;
 }
+.demo-bar{background:#eef1eb;min-height:42px;border-bottom-color:#e1e6dc}.demo-bar__inner{min-height:42px;padding-block:6px;gap:18px}.demo-label{display:flex;align-items:center;gap:6px;font-size:8px;font-weight:600;letter-spacing:1.2px;color:#7b8874}.demo-label>span{width:5px;height:5px;background:#8fa77f;border-radius:50%}.segments{gap:3px}.segments button{border:0;background:transparent;font-size:10px;height:26px;border-radius:5px;color:#7b8576;padding:0 12px}.segments button.active{background:white;box-shadow:0 1px 3px #29452c0a;color:var(--primary)}.reset{background:transparent;border:0;font-size:10px;min-height:26px;height:26px;color:#7b8576;padding:0}.picker .meta,.picker.meta{font-size:10px}.picker-select{min-height:28px;font-size:11px;padding-block:2px}@media(max-width:600px){.demo-bar__inner{gap:8px;padding-inline:20px}.demo-label{display:none}.segments button{padding-inline:9px}.picker{order:3;width:100%}.reset{margin-left:auto}}
 </style>
