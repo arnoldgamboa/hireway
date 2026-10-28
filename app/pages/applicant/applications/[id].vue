@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'portal' })
 const route = useRoute()
+const router = useRouter()
 const store = useDemoStore()
 const toast = useToast()
 
@@ -16,6 +17,16 @@ const consentRecording = ref(false)
 const acceptConsent = ref(false)
 const declineOpen = ref(false)
 const declineReason = ref('')
+
+watch(
+  () => [store.ui.applicantId, app.value?.id, app.value?.applicantId] as const,
+  () => {
+    if (app.value && app.value.applicantId !== store.ui.applicantId) {
+      router.replace('/applicant')
+    }
+  },
+  { immediate: true },
+)
 
 const gentleOutcome = computed(() => {
   if (!app.value) return ''

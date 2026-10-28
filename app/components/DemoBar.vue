@@ -18,7 +18,7 @@ function goRole (role: 'public' | 'applicant' | 'client' | 'hr') {
 
 function onApplicantChange (e: Event) {
   const id = (e.target as HTMLSelectElement).value
-  store.setApplicant(id, p => router.push(p))
+  store.setApplicant(id, route.path, p => router.push(p))
 }
 
 function onClientChange (e: Event) {
@@ -28,10 +28,8 @@ function onClientChange (e: Event) {
 
 function resetDemo () {
   if (!confirm('Reset all demo data to the seed?')) return
-  const path = route.path
-  store.resetDemo()
+  store.resetDemo(route.path)
   toast.show('Demo reset')
-  router.push(path).catch(() => router.push('/'))
 }
 </script>
 
@@ -77,7 +75,7 @@ function resetDemo () {
 }
 
 .demo-bar {
-  height: 3rem;
+  min-height: 3rem;
   background: var(--canvas);
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
@@ -85,11 +83,11 @@ function resetDemo () {
 
 .demo-bar__inner {
   max-width: 100%;
-  height: 100%;
+  min-height: 3rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
   flex-wrap: wrap;
 }
 

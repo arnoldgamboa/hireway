@@ -23,6 +23,13 @@ function defaultUi (): DemoUiState {
   }
 }
 
+function generateAlias () {
+  const chars = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ'
+  let suffix = ''
+  for (let i = 0; i < 4; i++) suffix += chars[Math.floor(Math.random() * chars.length)]
+  return `HW-${suffix}`
+}
+
 function syncOrgBalances (state: DemoState) {
   for (const org of state.orgs) {
     const rows = state.ledger.filter(l => l.orgId === org.id).sort((a, b) => a.when.localeCompare(b.when))
@@ -92,12 +99,11 @@ export const useDemoStore = defineStore('demo', {
       this.persist()
     },
 
-    resetDemo () {
+    resetDemo (currentPath?: string) {
       if (!import.meta.client) return
-      sessionStorage.removeItem(STORAGE_KEY)
       this.data = createSeed()
-      this.ui = defaultUi()
       syncOrgBalances(this.data)
+      if (currentPath) this.syncRoleFromPath(currentPath)
       this.persist()
     },
 
@@ -120,10 +126,17 @@ export const useDemoStore = defineStore('demo', {
       this.persist()
     },
 
-    setApplicant (id: string, navigate?: (path: string) => void) {
+    setApplicant (id: string, currentPath?: string, navigate?: (path: string) => void) {
       this.ui.applicantId = id
-      const mine = this.data.applications.some(a => a.applicantId === id)
-      if (navigate && !mine) navigate('/applicant')
+      const appMatch = currentPath?.match(/^\/applicant\/applications\/([^/]+)/)
+      if (appMatch) {
+        const app = this.data.applications.find(a => a.id === appMatch[1])
+        if (app && app.applicantId !== id) {
+          navigate?.('/applicant')
+        }
+      } else if (navigate && !this.data.applications.some(a => a.applicantId === id)) {
+        navigate('/applicant')
+      }
       this.persist()
     },
 
@@ -373,6 +386,28 @@ export const useDemoStore = defineStore('demo', {
       job.status = 'Published'
       job.publishedAt = DEMO_TODAY
       this.persist()
+    },
+
+    shareRecommendation (applicationId: string, shareableNotes: string, overrides: Record<string, string>) {
+      const app = this.data.applications.find(a => a.id === applicationId)
+      if (!app || this.data.recommendations.some(r => r.applicationId === applicationId)) return false
+      const alias = generateAlias()
+      this.data.recommendations.push({
+        id: `rec-${applicationId}`,
+        applicationId,
+        alias,
+        status: 'shared',
+        whySummary: 'HR recommendation',
+        includeNotes: true,
+        includeRecording: true,
+        includeCv: true,
+        shareableNotes,
+        internalNotes: overrides.internal || undefined,
+      })
+      app.status = 'Recommended'
+      app.updatedAt = DEMO_TODAY
+      this.persist()
+      return true
     },
 
     setApplicationStatus (applicationId: string, status: ApplicationStatus) {

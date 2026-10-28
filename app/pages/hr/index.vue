@@ -12,7 +12,7 @@ const items = computed(() => {
   }
   const felixInvite = store.data.invites.find(i => i.id === 'inv-felix-csr' && i.status === 'Sent')
   if (felixInvite) {
-    rows.push({ label: 'Felix Navarro · invite unanswered', to: '/applicant/applications/app-felix-csr', reason: 'Sent 27 Oct, expires 3 Nov' })
+    rows.push({ label: 'Felix Navarro · invite unanswered', to: '/hr/jobs/job-csr/applications/app-felix-csr', reason: 'Sent 27 Oct, expires 3 Nov' })
   }
   const omar = store.applicationById('app-omar-csr')
   if (omar && omar.status === 'Accepted invite' && !store.data.clientInterviews.some(c => c.applicationId === 'app-omar-csr')) {
