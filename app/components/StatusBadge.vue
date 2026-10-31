@@ -17,7 +17,7 @@ const toneClass = computed(() => {
 </template>
 
 <style scoped>
-.badge--quiet { background: #eef1f4; color: var(--ink-soft); }
+.badge--quiet { background: var(--sky); color: var(--ink-soft); }
 .badge--moving { background: var(--tint); color: var(--primary); }
 .badge--attention { background: var(--warn-tint); color: var(--warn); }
 .badge--done { background: var(--good-tint); color: var(--good); }

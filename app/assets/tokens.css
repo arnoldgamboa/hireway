@@ -1,16 +1,25 @@
 :root {
-  --canvas: #f7f8f5;
+  /* Hope: grounded green, growing sage, sunlight, open sky, warm ivory. */
+  --sage: #B8CDA3;
+  --sunlight: #F4D97B;
+  --sky: #DCEBF0;
+  --hero-surface: #F2F1DD;
+  --surface-soft: #F6F6EC;
+  --border-hover: #93AD81;
+  --sky-ink: #385D6C;
+  --sunlight-ink: #705715;
+  --canvas: #FAF8F1;
   --surface: #ffffff;
   --ink: #202e29;
-  --ink-soft: #748078;
-  --line: #e2e7e0;
+  --ink-soft: #5D6D63;
+  --line: #E4E5D8;
   --primary: #234f3e;
   --primary-hover: #173a2d;
-  --tint: #edf3e9;
+  --tint: #EDF2E5;
   --good: #1e6b45;
-  --good-tint: #e5f2eb;
+  --good-tint: #E5EEDC;
   --warn: #8a5a12;
-  --warn-tint: #f8f0e2;
+  --warn-tint: #FBF0CC;
   --danger: #9b3a3a;
   --danger-tint: #f8e8e8;
   --focus: #1f6b5a;
